@@ -17,7 +17,7 @@ const Login = () => {
     
     try {
       await login(email, password);
-      navigate('/dashboard');
+      navigate('/welcome');
     } catch (err) {
       setError('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
       console.error('Login error details:', err);
