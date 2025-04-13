@@ -8,6 +8,7 @@ import Footer from './layout/Footer';
 import Login from './pages/auth/login';
 import Welcome from './components/welcome/Welcome';
 import Usuarios from './components/usuarios/UserList';
+import Supplier from './components/proveedores/SupplierList';
 
 function App() {
     return (
@@ -33,6 +34,7 @@ function App() {
                         <Route index element={<Navigate to="/welcome" replace />} />
                         <Route path="/welcome" element={<Welcome />} />
                         <Route path='/usuarios' element={<Usuarios/>}/>
+                        <Route path='/proveedores' element={<Supplier/>}/>
                         {/* Otras rutas protegidas */}
                     </Route>
                     
