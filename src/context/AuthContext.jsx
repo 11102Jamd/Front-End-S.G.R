@@ -27,9 +27,14 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const userData = await apiLogin(email, password);
-    setUser(userData);
-    return userData;
+    try {
+      const userData = await apiLogin(email, password);
+      setUser(userData);
+      return userData;
+    } catch (error) {
+      setUser(null);
+      return null;
+    } 
   };
 
   const logout = async () => {

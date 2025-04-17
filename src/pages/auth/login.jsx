@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import Swal from 'sweetalert2';
+import '../../index.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -8,7 +10,7 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, user } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,11 +18,26 @@ const Login = () => {
     setLoading(true);
     
     try {
-      await login(email, password);
+      const userData = await login(email, password);
+
+      if (!userData) {
+        throw new Error("Autenticacion fallida")
+      }
+
+      await Swal.fire({
+        title: 'Bienvendido',
+        text: `Usuario: ${userData.name || userData.email}`,
+        icon: 'success',
+      });
       navigate('/welcome');
     } catch (err) {
       setError('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
       console.error('Login error details:', err);
+      await Swal.fire({
+        title: '¡Error!',
+        text: 'Usuario no Identifcado en el sistema',
+        icon: 'error',
+      });
     } finally {
       setLoading(false);
     }
@@ -28,33 +45,35 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h2>Iniciar Sesión</h2>
-      {error && <div className="error-message">{error}</div>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            disabled={loading}
-          />
-        </div>
-        <div>
-          <label>Contraseña:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            disabled={loading}
-          />
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Cargando...' : 'Ingresar'}
-        </button>
-      </form>
+      <div className='login'>
+        <h2>Iniciar Sesión</h2>
+        {error && <div className="error-message">{error}</div>}
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Email:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={loading}
+            />
+          </div>
+          <div>
+            <label>Contraseña:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              disabled={loading}
+            />
+          </div>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Cargando...' : 'Ingresar'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
