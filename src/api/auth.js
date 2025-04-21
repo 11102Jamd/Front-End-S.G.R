@@ -27,9 +27,11 @@ export const logout = async () => {
     localStorage.removeItem('token');
   } catch (error) {
     console.error('Logout error:', error);
+    localStorage.removeItem('token');
     throw error;
   }
 };
+
 
 export const getUser = async () => {
     try {

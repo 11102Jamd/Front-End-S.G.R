@@ -26,7 +26,7 @@ const Login = () => {
 
       await Swal.fire({
         title: 'Bienvendido',
-        text: `Usuario: ${userData.name || userData.email}`,
+        text: `Usuario: ${userData.name1 || userData.email}`,
         icon: 'success',
       });
       navigate('/welcome');

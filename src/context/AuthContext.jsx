@@ -33,14 +33,24 @@ export const AuthProvider = ({ children }) => {
       return userData;
     } catch (error) {
       setUser(null);
-      return null;
+      throw error;
     } 
   };
 
   const logout = async () => {
-    await apiLogout();
-    setUser(null);
-    localStorage.removeItem('token');
+    try {
+      await apiLogout();
+      setUser(null);
+      localStorage.removeItem('token');
+      // Forzar recarga para limpiar completamente el estado
+      window.location.href = '/login';
+    } catch (error) {
+        console.error('Logout error:', error);
+        // Forzar limpieza incluso si hay error
+        setUser(null);
+        localStorage.removeItem('token');
+        throw error;
+    }
   };
 
   return (

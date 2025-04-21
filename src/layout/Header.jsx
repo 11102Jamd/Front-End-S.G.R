@@ -11,6 +11,16 @@ function Header() {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
+    const handleLogout = async () => {
+        try {
+            await logout();
+            // La redirección ahora se maneja en el método logout del contexto
+        } catch (error) {
+            console.error('Error al cerrar sesión:', error);
+            // Mostrar mensaje de error al usuario si es necesario
+        }
+    };
+
     return (
         <header className="header">
             <div className="header-content">
@@ -28,7 +38,7 @@ function Header() {
                         </button>
                         {isDropdownOpen && user && (
                             <div className="dropdown-menu show" style={{ right: 0, left: 'auto' }}>
-                                <button className="dropdown-item" onClick={logout}>
+                                <button className="dropdown-item" onClick={handleLogout}>
                                     <i className="bi bi-box-arrow-right me-2"></i> Cerrar sesión
                                 </button>
                             </div>
