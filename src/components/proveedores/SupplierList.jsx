@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import DataTable from "react-data-table-component";
-
-const API_PROVEEDOR = 'http://localhost:8000/api/proveedores';
+import CreateSupplierModal from "./CreateSupplierModal";
+import api from "../../utils/axiosConfig";
+import EditSupplierModal from "./EditSupplierModal";
 
 function Supplier(){
     const [suppliers, setSupplier] = useState([]);
@@ -17,7 +17,7 @@ function Supplier(){
     const getSupplier = async () => {
         try {
             setPending(true);
-            const response = await axios.get(API_PROVEEDOR);
+            const response = await api.get('/suppliers');
             setSupplier(response.data);
             setPending(false);
         } catch (error) {
@@ -28,7 +28,7 @@ function Supplier(){
 
     const deleteSupplier = async (id) => {
         try {
-            await axios.delete(`${API_PROVEEDOR}/${id}`);
+            await api.delete(`/suppliers/${id}`);
             getSupplier();
         } catch (error) {
             console.error("Error al eliminar el proveedor");
@@ -90,18 +90,20 @@ function Supplier(){
                 <div className="btn-group" role="group">
                     <button 
                         onClick={() => deleteSupplier(row.id)} 
-                        className='btn btn-danger btn-sm'
+                        className='btn btn-danger btn-sm rounded-2 p-2'
+                        title="Eliminar"
                     >
-                        Eliminar
+                        <i className="bi bi-trash fs-6"></i>
                     </button>
                     <button 
                         onClick={() => {
                             console.log('Editando Proveedor:', row); 
                             setSupplierSelected(row);
                         }} 
-                        className='btn btn-primary btn-sm ms-2'
+                        className='btn btn-primary btn-sm ms-2 rounded-2 p-2'
+                        title="Editar"
                     >
-                        Editar
+                        <i className="bi bi-pencil-square fs-6"></i>
                     </button>
                 </div>
             ),
@@ -127,7 +129,7 @@ function Supplier(){
                 <div className='card-body'>
                     <div className='d-flex justify-content-between mb-3'>
                         <button 
-                            onClick={() => setMostrarModal(true)} 
+                            onClick={() => setShowModal(true)} 
                             className='btn btn-success'
                         >
                             <i className="bi bi-plus-circle"></i> Crear Proveedor
