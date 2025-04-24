@@ -16,10 +16,10 @@ function EditInputModal({ input, onClose, onInputUpdated}) {
             onInputUpdated();
             onClose();
         } catch (error) {
-            console.error("Error al Actualizar el usuario: ", error);
+            console.error("Error al Actualizar el insumo: ", error);
             Swal.fire({
                 title: 'Error',
-                text: 'No se pudo Actualizar el usuario',
+                text: 'No se pudo Actualizar el insumo',
                 icon: 'error'
             });
         }

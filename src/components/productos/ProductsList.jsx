@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import api from "../../utils/axiosConfig";
+import CreateProductModal from "./CreateProductModal";
+import EditProductModal from "./EditProductModal";
 
 function Products(){
     const [product, setProduct] = useState([]);
@@ -178,20 +180,20 @@ function Products(){
                     />
                 </div>
             </div>
-            {/* {mostrarModal && (
+            {showModal && (
                 <CreateProductModal
-                        onClose={() => setMostrarModal(false)}
-                        onProductCreated={obtenerProductos}
+                        onClose={() => setShowModal(false)}
+                        onProductCreated={getProducts}
                     />
                 )}
 
-            {productoSeleccionado && (
+            {productSelected && (
                 <EditProductModal
-                    product={productoSeleccionado}
-                    onClose={() => setProductoSeleccionado(null)}
-                    onProductUpdate={obtenerProductos}
+                    product={productSelected}
+                    onClose={() => setProductSelected(null)}
+                    onProductUpdate={getProducts}
                 />
-            )} */}
+            )}
         </div>
     );
 
