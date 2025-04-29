@@ -10,9 +10,9 @@ function CreateInputModal({onClose, onInputCreated}) {
     const createInput = async () => {
         try {
             await api.post('/inputs', newInput);
+            await Swal.fire('Éxito', 'Insumo creado', 'success');
             onInputCreated();
             onClose();
-            await Swal.fire('Éxito', 'Insumo creado', 'success');
             setNewInput({
                 InputName:'',
             })

@@ -7,13 +7,13 @@ function EditSupplierModal({supplier, onClose, onSupplierUpdated}) {
 
     const updateSupplier = async () => {
         try {
-            await api.put(`/suppliers/${supplier.id}`, supplierUpdate)
+            await api.put(`/suppliers/${supplier.id}`, supplierUpdate);
+            await Swal.fire('Éxito', 'Proveedor Actualizado', 'success');
             onSupplierUpdated();
             onClose();
-            await Swal.fire('Éxito', 'Proveedor Actualizado', 'success');
         } catch (error) {
             console.error("Error al Actualizar el proveedor: ",error);
-             await Swal.fire({
+            await Swal.fire({
                 title: '¡Error!',
                 text: 'Error al crear el proveedor',
                 icon: 'error',

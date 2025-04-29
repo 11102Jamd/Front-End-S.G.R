@@ -13,9 +13,9 @@ function CreateProductModal({ onClose, onProductCreated}) {
     const createProduct = async () => {
         try {
             await api.post('/products', newProduct);
+            await Swal.fire('Éxito', 'Producto Creado', 'success');
             onProductCreated();
             onClose();
-            await Swal.fire('Éxito', 'Producto Creado', 'success');
             setNewProduct({
                 ProductName: '',
                 InitialQuantity: '',
