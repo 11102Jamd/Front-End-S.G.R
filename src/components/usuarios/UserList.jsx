@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
+import CreateUserModal from './CreateUserModal';
 // import CreateUserModal from './CrearUsuario';
 // import EditarUsuarioModal from './EditarUsuario';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Importar Bootstrap CSS
-
-
-const API_USUARIO = 'http://localhost:8000/api/usuarios';
+import api from "../../utils/axiosConfig";
+import EditUserModal from './EditUserModal';
 
 function Usuarios() {
     const [users, setUsers] = useState([]);
@@ -21,7 +21,7 @@ function Usuarios() {
     const getUsers = async () => {
         try {
             setPending(true);
-            const response = await axios.get(API_USUARIO);
+            const response = await api.get('/users');
             setUsers(response.data);
             setPending(false);
         } catch (error) {
@@ -32,7 +32,7 @@ function Usuarios() {
 
     const deleteUser = async (id) => {
         try {
-            await axios.delete(`${API_USUARIO}/${id}`);
+            await axios.delete(`/users/${id}`);
             getUsers();
         } catch (error) {
             console.error('Error al eliminar usuario:', error);
@@ -104,24 +104,24 @@ function Usuarios() {
                 <div className="btn-group" role="group">
                     <button 
                         onClick={() => deleteUser(row.id)} 
-                        className='btn btn-danger btn-sm'
+                        className='btn btn-danger btn-sm rounded-2 p-2'
+                        title="Eliminar"
                     >
-                        Eliminar
+                        <i className="bi bi-trash fs-6"></i>
                     </button>
                     <button 
                         onClick={() => {
                             console.log('Editando usuario:', row); 
                             setUserSelected(row);
                         }} 
-                        className='btn btn-primary btn-sm ms-2'
+                        className='btn btn-primary btn-sm ms-2 rounded-2 p-2'
+                        title="Editar"
                     >
-                        Editar
+                        <i className="bi bi-pencil-square fs-6"></i>
                     </button>
                 </div>
             ),
             ignoreRowClick: true,
-            allowOverflow: true,
-            button: true,
         },
     ];
 
@@ -180,7 +180,7 @@ function Usuarios() {
             )}
 
             {userSelected && (
-                <EditarUsuarioModal
+                <EditUserModal
                     user={userSelected}
                     onClose={() => setUserSelected(null)}
                     onUserUpdated={getUsers}

@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import Swal from "sweetalert2";
 import api from "../../utils/axiosConfig";
-import CreateInputModal from "./CreateInputModal";
-import EditInputModal from "./EditInputModal";
+import CreateProductModal from "./CreateProductModal";
+import EditProductModal from "./EditProductModal";
 
-
-function Inputs() {
-    const [input, setInput] = useState([]);
+function Products(){
+    const [product, setProduct] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [inputSelected, setInputSelected] = useState(null);
+    const [productSelected, setProductSelected] = useState(null);
     const [pending, setPending] = useState(true);
 
-    useEffect(()=>{
-        getInputs();
+    useEffect(() => {
+        getProducts();
     }, []);
 
-    const getInputs = async () => {
+    const getProducts = async () => {
         try {
             setPending(true);
-            const response = await api.get('/inputs');
-            setInput(response.data);
+            const response = await api.get('/products')
+            setProduct(response.data);
             setPending(false);
         } catch (error) {
-            console.error('Error al mostrar todos los Insumos: ', error);
-            setPending(false);
+            console.error('Error al obtener los productos:', error);
+            setPending(false)
         }
-    };
-
-    const deleteInput = async (id) => {
+    }
+    
+    const deleteProduct = async () => {
         const result = await Swal.fire({
             title:'¿Estas seguro de eliminar este registro?',
             text: "¡No podrás revertir esta acción!",
@@ -42,7 +40,7 @@ function Inputs() {
 
         if (result.isConfirmed) {
             try {
-                await api.delete(`/inputs/${id}`);
+                await api.delete(`/products/${id}`);
                 await Swal.fire({
                     title: '¡Eliminado!',
                     text:'El insumo ha sido eliminado.',
@@ -57,11 +55,11 @@ function Inputs() {
                 );
             }
         }
-    };
+    }
 
     const customStyles = {
-        headCells: {
-            style: {
+        headCells:{
+            style:{
                 backgroundColor: '#343a40', 
                 color: 'white',
                 fontSize: '16px',
@@ -72,10 +70,10 @@ function Inputs() {
             style: {
                 minHeight: '50px',
                 '&:nth-child(even)': {
-                    backgroundColor: '#f8f9fa', // Color claro alterno
+                    backgroundColor: '#f8f9fa', 
                 },
                 '&:hover': {
-                    backgroundColor: '#e9ecef !important', // Color hover
+                    backgroundColor: '#e9ecef !important', 
                 },
             },
         },
@@ -85,59 +83,45 @@ function Inputs() {
                 borderTop: '1px solid #dee2e6',
             },
         },
-    };
+    }
 
     const columns = [
         {
-            name: 'Insumo',
-            selector: row => row.InputName,
-            sortable: true,
-        },
-        {
-            name: 'Precio Unidad',
-            selector: row => {
-                const lastOrder = row.input_orders?.[0];
-                return lastOrder ? `${lastOrder.UnityPrice}`: 'N/A'
-            },
+            name: 'Producto',
+            selector: row => row.ProductName,
             sortable: true,
         },
         {
             name: 'Cantidad Inicial',
-            selector: row => {
-                const lastOrder = row.input_orders?.[0];
-                return lastOrder ? `${lastOrder.InitialQuantity} ${lastOrder.UnitMeasurement}`: 'N/A'
-            },
-            sortable: true,
-        },
-        {
-            name: 'Precio Cantidad',
-            selector: row => {
-                const lastOrder = row.input_orders?.[0];
-                return lastOrder ? `${lastOrder.PriceQuantity}`: 'N/A'
-            },
+            selector: row => row.InitialQuantity,
             sortable: true,
         },
         {
             name: 'Stock',
-            selector: row => `${row.CurrentStock} ${row.UnitMeasurementGrams}`,
+            selector: row => row.CurrentStock,
+            sortable: true,
+        },
+        {
+            name: 'Precio',
+            selector: row => row.UnityPrice,
             sortable: true,
         },
         {
             name: 'Acciones',
             cell: row => (
-                <div className="btn-group" role="group">
-                    <button 
-                        onClick={() => deleteInput(row.id)} 
+                <div className='btn-group' role="group">
+                    <button
+                        onClick={() => deleteProduct(row.id)}
                         className='btn btn-danger btn-sm rounded-2 p-2'
                         title="Eliminar"
                     >
                         <i className="bi bi-trash fs-6"></i>
                     </button>
-                    <button 
+                    <button
                         onClick={() => {
-                            console.log('Editando insumo:', row); 
-                            setInputSelected(row);
-                        }} 
+                            console.log('Editando producto: ', row);
+                            setProductSelected(row);
+                        }}
                         className='btn btn-primary btn-sm ms-2 rounded-2 p-2'
                         title="Editar"
                     >
@@ -146,7 +130,8 @@ function Inputs() {
                 </div>
             ),
             ignoreRowClick: true,
-        }
+            allowOverFlow: true,
+        },
     ];
 
     const paginationOptions = {
@@ -157,27 +142,27 @@ function Inputs() {
         noRowsPerPage: false,
     };
 
-    return (
+    return(
         <div className='container mt-4'>
             <div className='card'>
                 <div className='card-header bg-primary text-white'>
-                    <h1 className='h4'>Gestión de Insumos</h1>
+                    <h1 className='h4'>Gestion de Productos</h1>
                 </div>
-
+                
                 <div className='card-body'>
                     <div className='d-flex justify-content-between mb-3'>
-                        <button 
-                            onClick={() => setShowModal(true)} 
+                        <button
+                            onClick={() => setShowModal(true)}
                             className='btn btn-success'
                         >
-                            <i className="bi bi-plus-circle"></i> Crear Insumo
+                            <i className='bi bi-plus-circle'></i> Crear Producto
                         </button>
                     </div>
 
                     <DataTable
-                        title="Lista de Insumos"
+                        title="Lista de Productos"
                         columns={columns}
-                        data={input}
+                        data={product}
                         pagination
                         paginationPerPage={5} 
                         paginationRowsPerPageOptions={[5, 10, 15, 20]} 
@@ -191,27 +176,26 @@ function Inputs() {
                         progressComponent={<div className="spinner-border text-primary" role="status">
                             <span className="visually-hidden">Cargando...</span>
                         </div>}
-                        noDataComponent={<div className="alert alert-info">No hay insumos registrados</div>}
+                        noDataComponent={<div className="alert alert-info">No hay productos registrados</div>}
                     />
                 </div>
             </div>
-
             {showModal && (
-                <CreateInputModal
-                    onClose={() => setShowModal(false)}
-                    onInputCreated={getInputs}
-                />
-            )}
+                <CreateProductModal
+                        onClose={() => setShowModal(false)}
+                        onProductCreated={getProducts}
+                    />
+                )}
 
-            {inputSelected && (
-                <EditInputModal
-                    input={inputSelected}
-                    onClose={() => setInputSelected(null)}
-                    onInputUpdated={getInputs}
+            {productSelected && (
+                <EditProductModal
+                    product={productSelected}
+                    onClose={() => setProductSelected(null)}
+                    onProductUpdate={getProducts}
                 />
             )}
         </div>
     );
-}   
 
-export default Inputs;
+}
+export default Products

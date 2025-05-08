@@ -10,6 +10,7 @@ import Welcome from './components/welcome/Welcome';
 import Usuarios from './components/usuarios/UserList';
 import Supplier from './components/proveedores/SupplierList';
 import Inputs from './components/insumos/InputsList';
+import Products from './components/productos/ProductsList';
 
 function App() {
     return (
@@ -37,6 +38,7 @@ function App() {
                         <Route path='/usuarios' element={<Usuarios/>}/>
                         <Route path='/proveedores' element={<Supplier/>}/>
                         <Route path='/insumos' element={<Inputs/>}/>
+                        <Route path='/productos' element={<Products/>}></Route>
                         {/* Otras rutas protegidas */}
                     </Route>
                     
