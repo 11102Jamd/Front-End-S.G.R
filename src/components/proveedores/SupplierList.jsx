@@ -31,7 +31,7 @@ function Supplier(){
             await axios.delete(`${API_PROVEEDOR}/${id}`);
             getSupplier();
         } catch (error) {
-            console.error("Error al eliminar el proveedor");
+            console.error("Error al eliminar el proveedor",error);
         }
     };
 
@@ -127,7 +127,7 @@ function Supplier(){
                 <div className='card-body'>
                     <div className='d-flex justify-content-between mb-3'>
                         <button 
-                            onClick={() => setMostrarModal(true)} 
+                            onClick={() => setShowModal(true)} 
                             className='btn btn-success'
                         >
                             <i className="bi bi-plus-circle"></i> Crear Proveedor
