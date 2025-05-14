@@ -31,7 +31,7 @@ function Supplier(){
             await api.delete(`/suppliers/${id}`);
             getSupplier();
         } catch (error) {
-            console.error("Error al eliminar el proveedor");
+            console.error("Error al eliminar el proveedor",error);
         }
     };
 

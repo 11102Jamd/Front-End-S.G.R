@@ -4,49 +4,52 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Ocupa toda la altura visible */
-    background-color: #f5f5f5; /* Fondo claro para mejor contraste */
+    min-height: 100vh;
+    /* Ocupa toda la altura visible */
+    background-color: #f5f5f5;
+    /* Fondo claro para mejor contraste */
 }
-  
+
 .login {
     background: white;
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px; /* Ancho máximo del formulario */
+    max-width: 400px;
+    /* Ancho máximo del formulario */
 }
-  
+
 .login h2 {
     text-align: center;
     margin-bottom: 1.5rem;
     color: #333;
 }
-  
+
 .login form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
-  
+
 .login form div {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
-  
+
 .login label {
     font-weight: 500;
     color: #555;
 }
-  
+
 .login input {
     padding: 0.75rem;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1rem;
 }
-  
+
 .login button {
     padding: 0.75rem;
     background-color: #007bff;
@@ -57,16 +60,16 @@
     cursor: pointer;
     transition: background-color 0.3s;
 }
-  
+
 .login button:hover {
     background-color: #0056b3;
 }
-  
+
 .login button:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
 }
-  
+
 .error-message {
     color: #dc3545;
     background-color: #f8d7da;
@@ -76,3 +79,5 @@
     text-align: center;
     border: 1px solid #f5c6cb;
 }
+
+
