@@ -5,10 +5,6 @@ const LARAVEL_BASE_URL = 'http://localhost:8000';
 
 export const login = async (email, password) => {
     try {
-        await axios.get('/sanctum/csrf-cookie', {
-        baseURL: LARAVEL_BASE_URL,
-        withCredentials: true
-        });
         
         const response = await api.post('/login', { email, password });
         
