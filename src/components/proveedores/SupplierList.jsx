@@ -40,18 +40,24 @@ function Supplier(){
             style: {
                 backgroundColor: '#343a40', 
                 color: 'white',
-                fontSize: '16px',
+                fontSize: '18px',
                 fontWeight: 'bold',
+            },
+        },
+        cells:{
+            style: {
+                fontSize: '18px',  // Tamaño de fuente aumentado para el contenido
+                padding: '12px 10px'  // Más espacio en celdas
             },
         },
         rows: {
             style: {
-                minHeight: '50px',
+                minHeight: '60px',
                 '&:nth-child(even)': {
-                    backgroundColor: '#f8f9fa', 
+                    backgroundColor: '#f8f9fa', // Color claro alterno
                 },
                 '&:hover': {
-                    backgroundColor: '#e9ecef !important', 
+                    backgroundColor: '#e9ecef !important', // Color hover
                 },
             },
         },
@@ -120,13 +126,13 @@ function Supplier(){
     };
 
     return(
-        <div className='container mt-4'>
+        <div className='container-fluid mt-4'>
             <div className='card'>
                 <div className='card-header bg-primary text-white'>
                     <h1 className='h4'>Gestión de Proveedores</h1>
                 </div>
 
-                <div className='card-body'>
+                <div className='card-body p-4'>
                     <div className='d-flex justify-content-between mb-3'>
                         <button 
                             onClick={() => setShowModal(true)} 
